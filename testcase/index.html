@@ -12,6 +12,7 @@
     <li><a href="./gallery/kcharts1.1.php">kcharts</a></li>
     <li><a href="./thirdparty/alimap.php">alimap</a></li>
     <li><a href="./thirdparty/jssdk.php">jssdk</a></li>
+    <li>KISSY.NodeList: <a href="./1.3.0/nodelist.php">php</a> <a href="./1.3.0/nodelist.html">html</a></li>
 </ul>
 
 </body>

@@ -1,4 +1,4 @@
-<!doctype html>
+ï»¿<!doctype html>
 <html>
 <head>
 <meta charset="gbk">
@@ -16,8 +16,8 @@
 <script type="text/javascript" src="../../assets/openjs/kissy/1.3.0/adaptor.js"></script>
 
 <!--
-    ĞèÒª²âÊÔµÄdom½á¹¹£¬×¢Òâ£¬×îÍâ²ã<div class="J_TScriptedModule" data-componentid="uniqueSign"> µÄclassºÍÎªÊôĞÔ²»¿ÉĞŞ¸Ä
-    ÓÃ»§µÄjavascriptÀíÂÛÉÏÖ»¿ÉÒÔ×÷ÓÃµ½Õâ¸ödomÏÂÃæ£¬²»¿ÉÒÔ"Ô½½ç"
+    éœ€è¦æµ‹è¯•çš„domç»“æ„ï¼Œæ³¨æ„ï¼Œæœ€å¤–å±‚<div class="J_TScriptedModule" data-componentid="uniqueSign"> çš„classå’Œä¸ºå±æ€§ä¸å¯ä¿®æ”¹
+    ç”¨æˆ·çš„javascriptç†è®ºä¸Šåªå¯ä»¥ä½œç”¨åˆ°è¿™ä¸ªdomä¸‹é¢ï¼Œä¸å¯ä»¥"è¶Šç•Œ"
 -->
 
 <div id="dom-test" data-componentid="uniqueSign" class="J_TScriptedModule">
@@ -51,32 +51,32 @@
 
     <!--    <input type="text" class="J_Calendar" name="sdfu7"/>-->
     <!---->
-    <!--    <input type="text" id="J_AucTitle" name="item-title" value="Ã÷ºÓ">-->
+    <!--    <input type="text" id="J_AucTitle" name="item-title" value="æ˜æ²³">-->
     <!--    <div id="J_LimiterWrapper"></div>-->
 </div>
 
-<!--Ä£¿é³õÊ¼»¯µÄ°üÅäÖÃ£¬¶¼ºÜÊìÏ¤ÁË-->
+<!--æ¨¡å—åˆå§‹åŒ–çš„åŒ…é…ç½®ï¼Œéƒ½å¾ˆç†Ÿæ‚‰äº†-->
 <script type="text/javascript">
     KISSY.config(
         {
             debug: true,
             packages: [
                 {
-                    name: "openjs", //°üÃû
-                    tag: "20130527",//Ê±¼ä´Á, Ìí¼ÓÔÚ¶¯Ì¬½Å±¾Â·¾¶ºóÃæ, ÓÃÓÚ¸üĞÂ°üÄÚÄ£¿é´úÂë
-                    path: "../../assets", //°ü¶ÔÓ¦Â·¾¶, Ïà¶ÔÂ·¾¶Ö¸Ïà¶ÔÓÚµ±Ç°Ò³ÃæÂ·¾¶    //
-                    charset: "utf-8" //°üÀïÄ£¿éÎÄ¼ş±àÂë¸ñÊ½
+                    name: "openjs", //åŒ…å
+                    tag: "20130527",//æ—¶é—´æˆ³, æ·»åŠ åœ¨åŠ¨æ€è„šæœ¬è·¯å¾„åé¢, ç”¨äºæ›´æ–°åŒ…å†…æ¨¡å—ä»£ç 
+                    path: "../../assets", //åŒ…å¯¹åº”è·¯å¾„, ç›¸å¯¹è·¯å¾„æŒ‡ç›¸å¯¹äºå½“å‰é¡µé¢è·¯å¾„    //
+                    charset: "utf-8" //åŒ…é‡Œæ¨¡å—æ–‡ä»¶ç¼–ç æ ¼å¼
                 }
             ]
         }
     );
-    cajaConfig = {//ÅäÖÃÏÂÄãĞèÒªÒıÈëµÄÄ£¿éÃû³Æ£¬×îºó»á±»useµ½
+    cajaConfig = {//é…ç½®ä¸‹ä½ éœ€è¦å¼•å…¥çš„æ¨¡å—åç§°ï¼Œæœ€åä¼šè¢«useåˆ°
         modules: "openjs/kissy/1.3.0/nodelist"
     }
 
 </script>
 
-<!--ÕâÀïÊÇ½«×Ô¼ºµÄjsÈÃ·şÎñ¶Ë±àÒëÒ»ÏÂ£¬ÅäÖÃÏÂ·şÎñ¶ËµÄphpÂ·¾¶ºÍ×Ô¼ºµÄjs¼´¿É£¬×¢ÒâÂ·¾¶-->
+<!--è¿™é‡Œæ˜¯å°†è‡ªå·±çš„jsè®©æœåŠ¡ç«¯ç¼–è¯‘ä¸€ä¸‹ï¼Œé…ç½®ä¸‹æœåŠ¡ç«¯çš„phpè·¯å¾„å’Œè‡ªå·±çš„jså³å¯ï¼Œæ³¨æ„è·¯å¾„-->
 <?
 switch ('caja') {
 case 'caja':

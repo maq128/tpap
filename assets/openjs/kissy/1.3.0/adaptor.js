@@ -1,27 +1,27 @@
-/**
- * @fileOverview ÊÊÅäÆ÷Éú³É¹¤¾ß¡£
+ï»¿/**
+ * @fileOverview é€‚é…å™¨ç”Ÿæˆå·¥å…·ã€‚
  */
 KISSY.makeAdaptor = function( def ) {
 	var me = KISSY.makeAdaptor;
 	KISSY.add(function ( S, Ctor ) {
 		return function( frameGroup ) {
 			/**
-			 * @param context ÉÏÏÂÎÄ
-			 * @param context.mod É³ÏäµÄÄ£¿é·¶Î§£¬ËùÓĞ²Ù×÷±ØĞëÏŞ¶¨µ½Ä£¿é·¶Î§Ö®ÄÚÈ¥Ö´ĞĞ
-			 * @param context.frame µ¥¸öÄ£¿éµÄÉ³Ïä
-			 * @return {Object} Êµ¼ÊµÄ×é¼ş¶ÔÏó
+			 * @param context ä¸Šä¸‹æ–‡
+			 * @param context.mod æ²™ç®±çš„æ¨¡å—èŒƒå›´ï¼Œæ‰€æœ‰æ“ä½œå¿…é¡»é™å®šåˆ°æ¨¡å—èŒƒå›´ä¹‹å†…å»æ‰§è¡Œ
+			 * @param context.frame å•ä¸ªæ¨¡å—çš„æ²™ç®±
+			 * @return {Object} å®é™…çš„ç»„ä»¶å¯¹è±¡
 			 */
 			return function ( context ) {
-				// ±»ÊÊÅäµÄ×é¼ş constructor
+				// è¢«é€‚é…çš„ç»„ä»¶ constructor
 				var Adaptee = def.adaptee || Ctor;
 
-				// ÊÊÅäÆ÷µÄ contructor
-				// Note: Ö»Ö§³Ö new ·½Ê½¹¹½¨£¬²»Ö§³Ö function call µÄ·½Ê½¡£
+				// é€‚é…å™¨çš„ contructor
+				// Note: åªæ”¯æŒ new æ–¹å¼æ„å»ºï¼Œä¸æ”¯æŒ function call çš„æ–¹å¼ã€‚
 				var Adaptor = function() {
-					// ¶Ô´«Èë²ÎÊı½øĞĞ±£»¤ĞÔÔ¤´¦Àí
+					// å¯¹ä¼ å…¥å‚æ•°è¿›è¡Œä¿æŠ¤æ€§é¢„å¤„ç†
 					var args = me.safeArgsGuestToHost( arguments, def.args, this, context );
 
-					// ÓÃ´¦Àí¹ıµÄ²ÎÊı¹¹½¨ adaptee ¶ÔÏó
+					// ç”¨å¤„ç†è¿‡çš„å‚æ•°æ„å»º adaptee å¯¹è±¡
 					var inst;
 					if ( Object.create ) {
 						inst = Object.create( Adaptee.prototype );
@@ -32,12 +32,12 @@ KISSY.makeAdaptor = function( def ) {
 					var ret = Adaptee.apply( inst, args );
 					var adaptee = Object(ret) === ret ? ret : inst;
 
-					// ½¨Á¢ÊµÀıÖ®¼äµÄÊÊÅä¹ØÏµ
+					// å»ºç«‹å®ä¾‹ä¹‹é—´çš„é€‚é…å…³ç³»
 					me.adaptTo( this, adaptee );
 				};
 				frameGroup.markCtor( Adaptor );
 
-				// Éú³ÉÊÊÅäÆ÷µÄ´úÀí property
+				// ç”Ÿæˆé€‚é…å™¨çš„ä»£ç† property
 				var CreateSafeProperty = function( property ) {
 					var type = def.properties[ property ];
 					var real_prop = type.alias_of || property;
@@ -60,7 +60,7 @@ KISSY.makeAdaptor = function( def ) {
 						// getter
 						Adaptor.prototype.__defineGetter__( property, (function( property ) {
 							return function() {
-								// ÕâÀï£¬this ÊÇ Adaptor ÊµÀı
+								// è¿™é‡Œï¼Œthis æ˜¯ Adaptor å®ä¾‹
 								var ret = this._ADAPTEE_[ real_prop ];
 								return ret;
 							};
@@ -69,7 +69,7 @@ KISSY.makeAdaptor = function( def ) {
 							// setter
 							Adaptor.prototype.__defineSetter__( property, (function( property ) {
 								return function( val ) {
-									// ÕâÀï£¬this ÊÇ Adaptor ÊµÀı
+									// è¿™é‡Œï¼Œthis æ˜¯ Adaptor å®ä¾‹
 									this._ADAPTEE_[ real_prop ] = val;
 									return val;
 								};
@@ -87,81 +87,81 @@ KISSY.makeAdaptor = function( def ) {
 					}
 				};
 
-				// ¸ù¾İÊÊÅäÆ÷µÄÃèÊö¶¨Òå£¬Éú³ÉËùĞèµÄÈ«²¿´úÀí property
+				// æ ¹æ®é€‚é…å™¨çš„æè¿°å®šä¹‰ï¼Œç”Ÿæˆæ‰€éœ€çš„å…¨éƒ¨ä»£ç† property
 				for ( var property in def.properties ) {
 					CreateSafeProperty( property );
 				}
 
-				// Éú³ÉÊÊÅäÆ÷µÄ´úÀí method
+				// ç”Ÿæˆé€‚é…å™¨çš„ä»£ç† method
 				var CreateSafeMethod = function( method ) {
 					Adaptor.prototype[ method ] = function() {
-						// ÕâÀï£¬this ÊÇ Adaptor ÊµÀı
+						// è¿™é‡Œï¼Œthis æ˜¯ Adaptor å®ä¾‹
 
-						// ¶Ô´«Èë²ÎÊı½øĞĞ±£»¤ĞÔÔ¤´¦Àí
+						// å¯¹ä¼ å…¥å‚æ•°è¿›è¡Œä¿æŠ¤æ€§é¢„å¤„ç†
 						var args = me.safeArgsGuestToHost( arguments, def.methods[ method ], this, context );
 
-						// µ÷ÓÃ¶ÔÓ¦µÄ×é¼şÊµÀı·½·¨
+						// è°ƒç”¨å¯¹åº”çš„ç»„ä»¶å®ä¾‹æ–¹æ³•
 						var ret = this._ADAPTEE_[ method ].apply( this._ADAPTEE_, args );
 
-						// °Ñ·µ»ØÖµ×ª»»³ÉÊÊºÏ·µ»Ø¸ø guest code µÄÖµ
+						// æŠŠè¿”å›å€¼è½¬æ¢æˆé€‚åˆè¿”å›ç»™ guest code çš„å€¼
 						ret = me.safeValueHostToGuest( ret, context );
 
-						// TODO: ¿¼ÂÇÊÇ·ñĞèÒª¸ù¾İ def ÖĞµÄÄ³ÖÖÅäÖÃ¶Ô·µ»ØÖµ×ö´¦Àí
-						// Note: ÕâÀïµÄ ret ¶ÔÏóÀàĞÍÈç¹ûÊÇÎ´¾­ mark µÄ£¬¸ÃÔõÑù£¿
+						// TODO: è€ƒè™‘æ˜¯å¦éœ€è¦æ ¹æ® def ä¸­çš„æŸç§é…ç½®å¯¹è¿”å›å€¼åšå¤„ç†
+						// Note: è¿™é‡Œçš„ ret å¯¹è±¡ç±»å‹å¦‚æœæ˜¯æœªç» mark çš„ï¼Œè¯¥æ€æ ·ï¼Ÿ
 
 						return ret;
 					};
 					frameGroup.grantMethod( Adaptor, method );
 				};
 
-				// ¸ù¾İÊÊÅäÆ÷µÄÃèÊö¶¨Òå£¬Éú³ÉËùĞèµÄÈ«²¿´úÀí method
+				// æ ¹æ®é€‚é…å™¨çš„æè¿°å®šä¹‰ï¼Œç”Ÿæˆæ‰€éœ€çš„å…¨éƒ¨ä»£ç† method
 				for ( var method in def.methods ) {
 					CreateSafeMethod( method );
 				}
 
-				// event handler ÊÊÅä½Ó¿Ú
+				// event handler é€‚é…æ¥å£
 				Adaptor.prototype[ 'on' ] = function( name, guestCallback, scope ) {
-					// ÕâÀï£¬this ÊÇ Adaptor ÊµÀı
+					// è¿™é‡Œï¼Œthis æ˜¯ Adaptor å®ä¾‹
 
-					// ¼ì²éÊÇ·ñÎªÓĞ¶¨ÒåµÄ event
+					// æ£€æŸ¥æ˜¯å¦ä¸ºæœ‰å®šä¹‰çš„ event
 					var props = def.events[ name ];
 					if ( ! props || ! KISSY.isArray(props) ) {
 						throw new Error('event "' + name + '" not defined properly.');
 					}
 
-					// µ÷ÓÃ¶ÔÓ¦µÄ×é¼şÊµÀıµÄ on()
+					// è°ƒç”¨å¯¹åº”çš„ç»„ä»¶å®ä¾‹çš„ on()
 					var ret = this._ADAPTEE_.on( name, function( e ) {
-						// TODO: ¸ù¾İ props ÁĞ±í¹¹½¨ event ¶ÔÏó»Ø´«¸ø guest code
+						// TODO: æ ¹æ® props åˆ—è¡¨æ„å»º event å¯¹è±¡å›ä¼ ç»™ guest code
 						var event = {};
 						for ( var i = 0; i < props.length; i ++ ) {
 							var prop = props[i];
 							event[ prop ] = me.safeValueHostToGuest( e[ prop ], context );
 						}
 
-						// ÕâÀï¾Í²»ÓÃ¶Ô·µ»ØÖµ×ö±£»¤´¦ÀíÁË£¬ÒòÎªËü²»»á¶Ô host code ²úÉúÊ²Ã´ÍşĞ²
+						// è¿™é‡Œå°±ä¸ç”¨å¯¹è¿”å›å€¼åšä¿æŠ¤å¤„ç†äº†ï¼Œå› ä¸ºå®ƒä¸ä¼šå¯¹ host code äº§ç”Ÿä»€ä¹ˆå¨èƒ
 						return guestCallback.call( scope || this, event );
 					});
 
-					// °Ñ·µ»ØÖµ×ª»»³ÉÊÊºÏ·µ»Ø¸ø guest code µÄÖµ
+					// æŠŠè¿”å›å€¼è½¬æ¢æˆé€‚åˆè¿”å›ç»™ guest code çš„å€¼
 					ret = me.safeValueHostToGuest( ret, context );
 
 					return ret;
 				};
 				frameGroup.grantMethod( Adaptor, 'on' );
 
-				// Éú³ÉÊÊÅäÆ÷µÄ¾²Ì¬´úÀí method
+				// ç”Ÿæˆé€‚é…å™¨çš„é™æ€ä»£ç† method
 				var CreateSafeStaticMethod = function( Ctor, method ) {
 					Ctor[ method ] = frameGroup.markFunction( function() {
-						// ÕâÀï£¬this ÊÇ ¡­¡­£¿
-						// whatever£¬·´Õı²»ÓÃËü¡£
+						// è¿™é‡Œï¼Œthis æ˜¯ â€¦â€¦ï¼Ÿ
+						// whateverï¼Œåæ­£ä¸ç”¨å®ƒã€‚
 
-						// ¶Ô´«Èë²ÎÊı½øĞĞ±£»¤ĞÔÔ¤´¦Àí
+						// å¯¹ä¼ å…¥å‚æ•°è¿›è¡Œä¿æŠ¤æ€§é¢„å¤„ç†
 						var args = me.safeArgsGuestToHost( arguments, def.static_methods[ method ], null, context );
 
-						// µ÷ÓÃ¶ÔÓ¦µÄ×é¼ş¾²Ì¬·½·¨
+						// è°ƒç”¨å¯¹åº”çš„ç»„ä»¶é™æ€æ–¹æ³•
 						var ret = Adaptee[ method ].apply( null, args );
 
-						// °Ñ·µ»ØÖµ×ª»»³ÉÊÊºÏ·µ»Ø¸ø guest code µÄÖµ
+						// æŠŠè¿”å›å€¼è½¬æ¢æˆé€‚åˆè¿”å›ç»™ guest code çš„å€¼
 						ret = me.safeValueHostToGuest( ret, context );
 
 						return ret;
@@ -169,16 +169,16 @@ KISSY.makeAdaptor = function( def ) {
 					frameGroup.grantRead( Ctor, method );
 				};
 
-				// ¸ù¾İÊÊÅäÆ÷µÄÃèÊö¶¨Òå£¬Éú³ÉËùĞèµÄÈ«²¿¾²Ì¬´úÀí method
+				// æ ¹æ®é€‚é…å™¨çš„æè¿°å®šä¹‰ï¼Œç”Ÿæˆæ‰€éœ€çš„å…¨éƒ¨é™æ€ä»£ç† method
 				for ( var method in def.static_methods ) {
 					CreateSafeStaticMethod( Adaptor, method );
 				}
 
-				// ½¨Á¢ÀàĞÍÖ®¼äµÄÊÊÅä¹ØÏµ
+				// å»ºç«‹ç±»å‹ä¹‹é—´çš„é€‚é…å…³ç³»
 				me.adaptTo( Adaptor, Adaptee );
 
-				// ÔÚ±©Â¶¸ø caja µÄÊ±ºò£¬ÓÃÕâ¸ö HybridAdaptor ´úÌæ Adaptor£¬
-				// ¼´¿ÉÒÔÍ¬Ê±Ö§³Ö new ºÍ function call µÄ¹¹½¨·½Ê½
+				// åœ¨æš´éœ²ç»™ caja çš„æ—¶å€™ï¼Œç”¨è¿™ä¸ª HybridAdaptor ä»£æ›¿ Adaptorï¼Œ
+				// å³å¯ä»¥åŒæ—¶æ”¯æŒ new å’Œ function call çš„æ„å»ºæ–¹å¼
 				var HybridAdaptor = frameGroup.markFunction( function( a1, a2, a3 ) {
 					return new Adaptor( a1, a2, a3 );
 				});
@@ -196,13 +196,13 @@ KISSY.makeAdaptor = function( def ) {
 	});
 };
 
-// °´¶¨ÒåµÄÀàĞÍ¶Ô²ÎÊı±íÖĞµÄÊı¾İ¶ÔÏó½øĞĞ±£»¤ĞÔÔ¤´¦Àí£¬ÒÔ´«µİ¸ø±»ÊÊÅäµÄ×é¼ş¡£
-// Note: ´Ë´¦µÄÈë²ÎËäÈ»À´×ÔÓÚ guest code£¬µ«ÔÚ´©Ô½ taming boundary ½øÈë host
-// code Ö®ºó£¬ÒÑ¾­²»ÔÙÊÇÑ±»¯¶ÔÏó£¬¶øÊÇ±»×ª»»³É¶ÔÓ¦µÄÒ°»¯¶ÔÏóÁË¡£
+// æŒ‰å®šä¹‰çš„ç±»å‹å¯¹å‚æ•°è¡¨ä¸­çš„æ•°æ®å¯¹è±¡è¿›è¡Œä¿æŠ¤æ€§é¢„å¤„ç†ï¼Œä»¥ä¼ é€’ç»™è¢«é€‚é…çš„ç»„ä»¶ã€‚
+// Note: æ­¤å¤„çš„å…¥å‚è™½ç„¶æ¥è‡ªäº guest codeï¼Œä½†åœ¨ç©¿è¶Š taming boundary è¿›å…¥ host
+// code ä¹‹åï¼Œå·²ç»ä¸å†æ˜¯é©¯åŒ–å¯¹è±¡ï¼Œè€Œæ˜¯è¢«è½¬æ¢æˆå¯¹åº”çš„é‡åŒ–å¯¹è±¡äº†ã€‚
 KISSY.makeAdaptor.safeOneArgGuestToHost = function( origArg, type, adaptor, context ) {
 	var safeArg;
 
-	// Èç¹ûÔ­ÖµÊÇÊÊÅäÆ÷¶ÔÏó£¬ÔòÌæ»»³É¶ÔÓ¦µÄÒÑ±»ÊÊÅä¶ÔÏó
+	// å¦‚æœåŸå€¼æ˜¯é€‚é…å™¨å¯¹è±¡ï¼Œåˆ™æ›¿æ¢æˆå¯¹åº”çš„å·²è¢«é€‚é…å¯¹è±¡
 	if ( KISSY.isObject(origArg) && origArg._ADAPTEE_ ) {
 		origArg = origArg._ADAPTEE_;
 	}
@@ -213,15 +213,15 @@ KISSY.makeAdaptor.safeOneArgGuestToHost = function( origArg, type, adaptor, cont
 
 	} else if ( type === 'selector' ) {
 
-		// ÓÃ context ¶Ô selector µÄ·¶Î§½øĞĞÔ¼Êø
+		// ç”¨ context å¯¹ selector çš„èŒƒå›´è¿›è¡Œçº¦æŸ
 		safeArg = KISSY.makeAdaptor.restrictNodes( origArg, context );
 
 	} else if ( type === 'callback' ) {
 
-		// ×î¼òµ¥´Ö±©µÄ»Øµ÷º¯Êı×ª»»´¦Àí£º°ÑÀ´×Ô±»ÊÊÅä¶ÔÏóµÄ»Øµ÷²ÎÊıÖ±½Ó´«µİ¸øÔ­»Øµ÷º¯Êı¡£
-		// Note: ÓÉÓÚ¡°Ô­»Øµ÷º¯Êı¡±À´×ÔÓÚ guest code µÄ tamed function£¬ËùÒÔ´«¸øËüµÄÈë¿Ú
-		// ²ÎÊı»áÔÚ´©Ô½ taming boundary µÄÊ±ºò±»×Ô¶¯×ª»»Îª¶ÔÓ¦µÄÑ±»¯¶ÔÏó£¬ÆäÖĞÈç¹ûÉæ¼°µ½
-		// Î´¾­ mark ¹ıµÄÀàĞÍ£¬Ôò»á¶ªÊ§£¬±ÈÈç CustomEventObject¡£
+		// æœ€ç®€å•ç²—æš´çš„å›è°ƒå‡½æ•°è½¬æ¢å¤„ç†ï¼šæŠŠæ¥è‡ªè¢«é€‚é…å¯¹è±¡çš„å›è°ƒå‚æ•°ç›´æ¥ä¼ é€’ç»™åŸå›è°ƒå‡½æ•°ã€‚
+		// Note: ç”±äºâ€œåŸå›è°ƒå‡½æ•°â€æ¥è‡ªäº guest code çš„ tamed functionï¼Œæ‰€ä»¥ä¼ ç»™å®ƒçš„å…¥å£
+		// å‚æ•°ä¼šåœ¨ç©¿è¶Š taming boundary çš„æ—¶å€™è¢«è‡ªåŠ¨è½¬æ¢ä¸ºå¯¹åº”çš„é©¯åŒ–å¯¹è±¡ï¼Œå…¶ä¸­å¦‚æœæ¶‰åŠåˆ°
+		// æœªç» mark è¿‡çš„ç±»å‹ï¼Œåˆ™ä¼šä¸¢å¤±ï¼Œæ¯”å¦‚ CustomEventObjectã€‚
 		safeArg = (function( guestCallback ) {
 			return function() {
 				guestCallback.apply( adaptor, arguments );
@@ -230,7 +230,7 @@ KISSY.makeAdaptor.safeOneArgGuestToHost = function( origArg, type, adaptor, cont
 
 	} else if ( typeof type === 'function' ) {
 
-		// ÕâÀïµÄ type ÊÇÒ»¸ö factory function£¬ÓÃÓÚÉú³ÉÒ»¸ö¾ßÓĞ»Ø²Î±£»¤¹¦ÄÜµÄ»Øµ÷º¯Êı
+		// è¿™é‡Œçš„ type æ˜¯ä¸€ä¸ª factory functionï¼Œç”¨äºç”Ÿæˆä¸€ä¸ªå…·æœ‰å›å‚ä¿æŠ¤åŠŸèƒ½çš„å›è°ƒå‡½æ•°
 		safeArg = type( origArg, adaptor );
 
 	} else {
@@ -251,14 +251,14 @@ KISSY.makeAdaptor.safeArgsGuestToHost = function( origArgs, types, adaptor, cont
 KISSY.makeAdaptor.safeValueHostToGuest = function( origValue, context ) {
 	var ret = origValue;
 
-	// Èç¹ûÔ­ÖµÊÇÒÑ±»ÊÊÅä¶ÔÏó£¬ÔòÌæ»»³ÉÊÊÅäÆ÷±¾Éí
+	// å¦‚æœåŸå€¼æ˜¯å·²è¢«é€‚é…å¯¹è±¡ï¼Œåˆ™æ›¿æ¢æˆé€‚é…å™¨æœ¬èº«
 	if ( KISSY.isObject(origValue) && origValue._ADAPTOR_ ) {
 		ret = origValue._ADAPTOR_;
 	}
 
-	// Èç¹ûÔ­Öµ²»ÊÇÒÑ±»ÊÊÅä¶ÔÏó£¬µ«ÆäÀàĞÍÎª¡°¿ÉÊÊÅä¡±£¬Ôò´´½¨Ò»¸öÊÊÅäÆ÷À´´úÀíËü
+	// å¦‚æœåŸå€¼ä¸æ˜¯å·²è¢«é€‚é…å¯¹è±¡ï¼Œä½†å…¶ç±»å‹ä¸ºâ€œå¯é€‚é…â€ï¼Œåˆ™åˆ›å»ºä¸€ä¸ªé€‚é…å™¨æ¥ä»£ç†å®ƒ
 	else if ( KISSY.isObject(origValue) && origValue.constructor && origValue.constructor._ADAPTOR_ ) {
-		// ¶ÔÓÚ KISSY.NodeList ¶ÔÏó£¬Òª½«Æä·¶Î§Ô¼Êøµ½Ä£¿éÄÚ²¿
+		// å¯¹äº KISSY.NodeList å¯¹è±¡ï¼Œè¦å°†å…¶èŒƒå›´çº¦æŸåˆ°æ¨¡å—å†…éƒ¨
 		if ( origValue instanceof KISSY.NodeList ) {
 			origValue = new KISSY.NodeList.all( origValue, context.mod );
 		}
@@ -268,13 +268,13 @@ KISSY.makeAdaptor.safeValueHostToGuest = function( origValue, context ) {
 		ret = adaptor;
 	}
 
-	// DOM ¶ÔÏóĞèÒªÌØ±ğµÄ tame
+	// DOM å¯¹è±¡éœ€è¦ç‰¹åˆ«çš„ tame
 	else if ( typeof ret == 'object' && ! ret._ADAPTEE_ && ret instanceof Node ) {
 		ret = context.frame.imports.tameNode___( ret, true );
-		// TODO: ĞèÒª½øÒ»²½Ô¼ÊøÆä·¶Î§
+		// TODO: éœ€è¦è¿›ä¸€æ­¥çº¦æŸå…¶èŒƒå›´
 	}
 
-	// TODO: Array ĞèÒª½øÒ»²½´¦Àí
+	// TODO: Array éœ€è¦è¿›ä¸€æ­¥å¤„ç†
 
 	return ret;
 };
