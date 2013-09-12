@@ -29,12 +29,12 @@ KISSY.add(function (S, LineChart, BarChart, PieChart) {
             this.inner.render();
         };
 
-        SafeLineChart.prototype.showLine = function(){
-            this.inner.showLine();
+        SafeLineChart.prototype.showLine = function(lineIndex){
+            this.inner.showLine(lineIndex);
         };
 
-        SafeLineChart.prototype.hideLine = function(){
-            this.inner.hideLine();
+        SafeLineChart.prototype.hideLine = function(lineIndex){
+            this.inner.hideLine(lineIndex);
         };
 
         SafeLineChart.prototype.clear = function(){

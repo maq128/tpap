@@ -1,25 +1,25 @@
 /**
- * @fileOverview core×é¼şµÄ°²È«ÊÊÅäÆ÷
+ * @fileOverview coreç»„ä»¶çš„å®‰å…¨é€‚é…å™¨
  */
 KISSY.add(function (S, Calendar) {
     var DOM = S.DOM,
         Event = S.Event;
 
     /**
-     * Ìá¹©Ò»¸öinit·½·¨£¬Ãû×ÖÈÎÈ¡£¬×îºóÄ£¿éreturn¼´¿É¡£ ÓÃÀ´³õÊ¼»¯ÊÊÅäÆ÷
-     * ³õÊ¼»¯·½·¨ĞèÒª·µ»ØÒ»¸öº¯Êı£¬ÓÃÀ´ÎªÃ¿¸öÉ³Ïä»·¾³Ìá¹©ÊÊÅä¶ÔÏó¡£
-     * ps: Ò³ÃæÖĞ¿ÉÄÜ»áÓĞ¶à¸ö°²È«É³Ïä»·¾³¡£init·½·¨ÄÚÖ´ĞĞµÄ¿ÉÒÔÀí½âÎªËùÓĞÉ³Ïä¹²ÏíµÄÒ»Ğ©ÄÚÈİ¶ÔÏó£¬Ö÷ÒªÌá¹©×îÔ­Ê¼µÄ°²È«ÊÊÅä¶ÔÏóºÍ·½·¨¡£(Ö´ĞĞÒ»´Î,ËùÓĞÉ³Ïä¹²Ïí)
-     *     init·µ»ØµÄº¯Êı¿ÉÒÔÀí½âÊÇÎªÃ¿¸öÉ³ÏäÌá¹©µÄ°²È«ÊÊÅä¶ÔÏó¡£(Ö´ĞĞ¶à´Î£¬Ã¿¸öÉ³Ïä¶Ô¶ÔÏóµÄ²Ù×÷²»Ó°ÏìÆäËûÉ³Ïä)
-     *     ×Ü½á£º¿ÉÒÔÀí½âÎªKISSYÔÚframeGroup³õÊ¼»¯µÄÊ±ºòÊÇÒ»¸ö¶ÔÏó£¬È»ºó»ácopy¶à·İ£¬·Ö±ğ·Åµ½²»Í¬µÄÉ³Ïä»·¾³ÖĞÈ¥Ö´ĞĞ¡£Ã¿¸öcopyÏà»¥Ö®¼ä²»Ó°Ïì
-     * @param frameGroup Ò³ÃæÖĞµÄÉ³Ïä»·¾³£¬frame¼´ÎªÉ³Ïä£¬frameGroupÎªÉ³Ïä×é¡£É³ÏäµÄ¹«¹²»·¾³
-     * @returns {Function} ¹¤³§»ñÈ¡Êµ¼ÊµÄÊÊÅä¶ÔÏó
+     * æä¾›ä¸€ä¸ªinitæ–¹æ³•ï¼Œåå­—ä»»å–ï¼Œæœ€åæ¨¡å—returnå³å¯ã€‚ ç”¨æ¥åˆå§‹åŒ–é€‚é…å™¨
+     * åˆå§‹åŒ–æ–¹æ³•éœ€è¦è¿”å›ä¸€ä¸ªå‡½æ•°ï¼Œç”¨æ¥ä¸ºæ¯ä¸ªæ²™ç®±ç¯å¢ƒæä¾›é€‚é…å¯¹è±¡ã€‚
+     * ps: é¡µé¢ä¸­å¯èƒ½ä¼šæœ‰å¤šä¸ªå®‰å…¨æ²™ç®±ç¯å¢ƒã€‚initæ–¹æ³•å†…æ‰§è¡Œçš„å¯ä»¥ç†è§£ä¸ºæ‰€æœ‰æ²™ç®±å…±äº«çš„ä¸€äº›å†…å®¹å¯¹è±¡ï¼Œä¸»è¦æä¾›æœ€åŸå§‹çš„å®‰å…¨é€‚é…å¯¹è±¡å’Œæ–¹æ³•ã€‚(æ‰§è¡Œä¸€æ¬¡,æ‰€æœ‰æ²™ç®±å…±äº«)
+     *     initè¿”å›çš„å‡½æ•°å¯ä»¥ç†è§£æ˜¯ä¸ºæ¯ä¸ªæ²™ç®±æä¾›çš„å®‰å…¨é€‚é…å¯¹è±¡ã€‚(æ‰§è¡Œå¤šæ¬¡ï¼Œæ¯ä¸ªæ²™ç®±å¯¹å¯¹è±¡çš„æ“ä½œä¸å½±å“å…¶ä»–æ²™ç®±)
+     *     æ€»ç»“ï¼šå¯ä»¥ç†è§£ä¸ºKISSYåœ¨frameGroupåˆå§‹åŒ–çš„æ—¶å€™æ˜¯ä¸€ä¸ªå¯¹è±¡ï¼Œç„¶åä¼šcopyå¤šä»½ï¼Œåˆ†åˆ«æ”¾åˆ°ä¸åŒçš„æ²™ç®±ç¯å¢ƒä¸­å»æ‰§è¡Œã€‚æ¯ä¸ªcopyç›¸äº’ä¹‹é—´ä¸å½±å“
+     * @param frameGroup é¡µé¢ä¸­çš„æ²™ç®±ç¯å¢ƒï¼Œframeå³ä¸ºæ²™ç®±ï¼ŒframeGroupä¸ºæ²™ç®±ç»„ã€‚æ²™ç®±çš„å…¬å…±ç¯å¢ƒ
+     * @returns {Function} å·¥å‚è·å–å®é™…çš„é€‚é…å¯¹è±¡
      */
     function init(frameGroup) {
 
         /**
-         * untame ÊôĞÔ
+         * untame å±æ€§
          */
-            // ÉùÃ÷Íâ²¿Àà¿â¹¹ÔìÆ÷ÒÔ¼°º¯Êı
+            // å£°æ˜å¤–éƒ¨ç±»åº“æ„é€ å™¨ä»¥åŠå‡½æ•°
         frameGroup.markCtor(S.Anim);
         frameGroup.grantMethod(S.Anim, "run");
         frameGroup.grantMethod(S.Anim, "stop");
@@ -29,11 +29,11 @@ KISSY.add(function (S, Calendar) {
         frameGroup.grantMethod(S.Anim, "resume");
 
         /**
-         * Á´Ê½Ğ´ ĞèÒª×¢ÒâµÄÊÇ£¬±ÜÃâ±©Â¶Ô­Éúdom½Úµã¸øÍâ²¿
-         * ĞèÒª¿ª·ÅµÄ·½·¨ËµÃ÷
-         * ²»¿ª·ÅµÄ½Ó¿Ú append prepend before after html attrÏà¹Ø prop hasProp css index data removeData hasData unselectable
+         * é“¾å¼å†™ éœ€è¦æ³¨æ„çš„æ˜¯ï¼Œé¿å…æš´éœ²åŸç”ŸdomèŠ‚ç‚¹ç»™å¤–éƒ¨
+         * éœ€è¦å¼€æ”¾çš„æ–¹æ³•è¯´æ˜
+         * ä¸å¼€æ”¾çš„æ¥å£ append prepend before after html attrç›¸å…³ prop hasProp css index data removeData hasData unselectable
          */
-            // ÉùÃ÷Íâ²¿Àà¿â¹¹ÔìÆ÷ÒÔ¼°º¯Êı
+            // å£°æ˜å¤–éƒ¨ç±»åº“æ„é€ å™¨ä»¥åŠå‡½æ•°
 
         function SafeNodeList(selector) {
             this.inner = S.all(selector)
@@ -51,9 +51,9 @@ KISSY.add(function (S, Calendar) {
             'data hasData removeData').split(' ');
 
         /**
-         * EventObject µÄ»Øµ÷ÊôĞÔ»ñÈ¡
+         * EventObject çš„å›è°ƒå±æ€§è·å–
          */
-        var EventObject = S.EventObject || S.Event.DOMEventObject;//¼æÈİkissy1.1.6 ºÍ kissy1.3.0
+        var EventObject = S.EventObject || S.Event.DOMEventObject;//å…¼å®¹kissy1.1.6 å’Œ kissy1.3.0
         frameGroup.markCtor(EventObject);
         frameGroup.grantMethod(EventObject, "halt");
         frameGroup.grantMethod(EventObject, "preventDefault");
@@ -69,20 +69,20 @@ KISSY.add(function (S, Calendar) {
             frameGroup.grantRead(EventObject.prototype, p);
         });
 
-        //url°×Ãûµ¥ magine.taotaosou.net
+        //urlç™½åå• magine.taotaosou.net
         var urlIO = [/^(imagine\.taotaosou\.net)$|.\.(imagine\.taotaosou\.net)/, /.\.taobao\.(net)$/, /.\.taobaoapps\.(net)$/, /^(taegrid\.taobao\.com)$|.\.(taegrid\.taobao\.com)/, /^(uz\.taobao\.com)$|.\.(uz\.taobao\.com)/];
 
 
         /**
-         * @param context ÉÏÏÂÎÄ
-         * @param context.mod É³ÏäµÄÄ£¿é·¶Î§£¬ËùÓĞ²Ù×÷±ØĞëÏŞ¶¨µ½Ä£¿é·¶Î§Ö®ÄÚÈ¥Ö´ĞĞ
-         * @param context.frame µ¥¸öÄ£¿éµÄÉ³Ïä
-         * @return {Object} ÊµFs¼ÊµÄ×é¼ş¶ÔÏó
+         * @param context ä¸Šä¸‹æ–‡
+         * @param context.mod æ²™ç®±çš„æ¨¡å—èŒƒå›´ï¼Œæ‰€æœ‰æ“ä½œå¿…é¡»é™å®šåˆ°æ¨¡å—èŒƒå›´ä¹‹å†…å»æ‰§è¡Œ
+         * @param context.frame å•ä¸ªæ¨¡å—çš„æ²™ç®±
+         * @return {Object} å®Fsé™…çš„ç»„ä»¶å¯¹è±¡
          */
         return function (param) {
 
-            // ÏŞ¶¨Ä£¿éµÄÑ¡ÔñÆ÷·¶Î§£¬ËùÒÔ»ñÈ¡½ÚµãµÄapi£¬¾ùĞèÒªÍ¨¹ı¸Ãº¯Êı»ñÈ¡Ò»ÏÂ
-            // ½«·¶Î§ÏŞ¶¨µ½cajaÈİÆ÷Ö®ÄÚ
+            // é™å®šæ¨¡å—çš„é€‰æ‹©å™¨èŒƒå›´ï¼Œæ‰€ä»¥è·å–èŠ‚ç‚¹çš„apiï¼Œå‡éœ€è¦é€šè¿‡è¯¥å‡½æ•°è·å–ä¸€ä¸‹
+            // å°†èŒƒå›´é™å®šåˆ°cajaå®¹å™¨ä¹‹å†…
             function query(s, context) {
                 var ret = [];
                 if (context) {
@@ -100,7 +100,7 @@ KISSY.add(function (S, Calendar) {
                 return ret;
             }
 
-            //½²Ô­Éúnode½Úµã£¬½øĞĞtame·â×°
+            //è®²åŸç”ŸnodeèŠ‚ç‚¹ï¼Œè¿›è¡Œtameå°è£…
             function tame(n) {
                 return param.frame.imports.tameNode___(n, true);
             }
@@ -123,9 +123,9 @@ KISSY.add(function (S, Calendar) {
             }
 
             /**
-             * Event on ÒòÎªÕâÀïĞèÒª´¦Àí e.targetµÄtameÎÊÌâ£¬ËùÒÔĞèÒª¶îÍâ×öÒ»Ğ©ÊÂÇé
-             * Event remove ²Î¿¼ Event onµÄĞ´·¨£¬ by Ê¯°Ô
-             * @author ³ĞÓñ
+             * Event on å› ä¸ºè¿™é‡Œéœ€è¦å¤„ç† e.targetçš„tameé—®é¢˜ï¼Œæ‰€ä»¥éœ€è¦é¢å¤–åšä¸€äº›äº‹æƒ…
+             * Event remove å‚è€ƒ Event onçš„å†™æ³•ï¼Œ by çŸ³éœ¸
+             * @author æ‰¿ç‰
              */
             var Event_On = frameGroup.markFunction(function (s, event, handle, scope) {
                 var wrapper = genWrapper();
@@ -176,7 +176,7 @@ KISSY.add(function (S, Calendar) {
                 }
             });
 
-            //onºÍdetach ÊÖ¶¯×ª·¢¸øEvent.on ºÍ Event.detach
+            //onå’Œdetach æ‰‹åŠ¨è½¬å‘ç»™Event.on å’Œ Event.detach
             SafeNodeList.prototype.on = function (event, handle, scope) {
                 var self = this;
                 var s = self.inner.getDOMNodes();
@@ -184,7 +184,7 @@ KISSY.add(function (S, Calendar) {
                 return this;
             };
 
-            //onºÍdetach ÊÖ¶¯×ª·¢¸øEvent.on ºÍ Event.detach
+            //onå’Œdetach æ‰‹åŠ¨è½¬å‘ç»™Event.on å’Œ Event.detach
             SafeNodeList.prototype.delegate = function (event, filter, handle, scope) {
                 var self = this;
                 var s = self.inner.inner.getDOMNodes();
@@ -199,7 +199,7 @@ KISSY.add(function (S, Calendar) {
                 return this;
             };
             /**
-             * getDOMNodes tameÒ»ÏÂ
+             * getDOMNodes tameä¸€ä¸‹
              */
             SafeNodeList.prototype.getDOMNodes = function () {
                 var l = [];
@@ -282,7 +282,7 @@ KISSY.add(function (S, Calendar) {
             };
 
             /**
-             *  node½Ó¿ÚÖĞ£¬ÓĞÊ¹ÓÃµ½Ñ¡ÔñÆ÷µÄ²¿·Ö£¬¶¼ÓÃqueryÏŞ¶¨ÏÂ·¶Î§
+             *  nodeæ¥å£ä¸­ï¼Œæœ‰ä½¿ç”¨åˆ°é€‰æ‹©å™¨çš„éƒ¨åˆ†ï¼Œéƒ½ç”¨queryé™å®šä¸‹èŒƒå›´
              */
             S.each(('appendTo prependTo insertBefore insertAfter').split(' '), function (fn) {
                 SafeNodeList.prototype[fn] = function (sel) {
@@ -291,7 +291,7 @@ KISSY.add(function (S, Calendar) {
                 };
             });
             /**
-             *  node½Ó¿ÚÖĞ£¬attr ,data¶¼Ö»ÔÊĞí»ñµÃ×Ô¶¨ÒåÊôĞÔ
+             *  nodeæ¥å£ä¸­ï¼Œattr ,dataéƒ½åªå…è®¸è·å¾—è‡ªå®šä¹‰å±æ€§
              */
             SafeNodeList.prototype.data = function (name, value) {
                 if (value === undefined) {
@@ -345,7 +345,7 @@ KISSY.add(function (S, Calendar) {
                         return this;
                     }
                 } else {
-                    S.log('data-¿ªÍ·µÄÎ±ÊôĞÔ²Å±»Ö§³Ö!')
+                    S.log('data-å¼€å¤´çš„ä¼ªå±æ€§æ‰è¢«æ”¯æŒ!')
                 }
             };
 
@@ -354,7 +354,7 @@ KISSY.add(function (S, Calendar) {
                     this.inner.removeAttr(name);
                     return this;
                 } else {
-                    S.log('data-¿ªÍ·µÄÎ±ÊôĞÔ²Å±»Ö§³Ö!')
+                    S.log('data-å¼€å¤´çš„ä¼ªå±æ€§æ‰è¢«æ”¯æŒ!')
                 }
             };
 
@@ -366,14 +366,14 @@ KISSY.add(function (S, Calendar) {
             };
 
             /**
-             *  NodeList Ö§³ÖµÄfilter£¬µÚ¶ş¸ö²ÎÊı¶¼Ö§³Öº¯Êı, ÕâÀïÃæÎªÁË¼òµ¥£¬ÏÈÈ¥µôº¯ÊıµÄÖ§³Ö£¬Ö»Ö§³ÖÑ¡ÔñÆ÷¹ıÂË¹æÔò
+             *  NodeList æ”¯æŒçš„filterï¼Œç¬¬äºŒä¸ªå‚æ•°éƒ½æ”¯æŒå‡½æ•°, è¿™é‡Œé¢ä¸ºäº†ç®€å•ï¼Œå…ˆå»æ‰å‡½æ•°çš„æ”¯æŒï¼Œåªæ”¯æŒé€‰æ‹©å™¨è¿‡æ»¤è§„åˆ™
              */
             S.each(('filter next prev first last siblings children').split(' '), function (fn) {
                 SafeNodeList.prototype[ fn] = function (filter) {
                     if (!S.isFunction(filter)) {
                         return new SafeNodeList(this.inner[fn](filter));
                     } else {
-                        S.log('filter²ÎÊı±ØĞëÊÇ×Ö·û´®');
+                        S.log('filterå‚æ•°å¿…é¡»æ˜¯å­—ç¬¦ä¸²');
                         return this;
                     }
 
@@ -512,7 +512,7 @@ KISSY.add(function (S, Calendar) {
 
             return {
                 /**
-                 * Ò»Ğ©kissyÌá¹©µÄ·½·¨
+                 * ä¸€äº›kissyæä¾›çš„æ–¹æ³•
                  */
                 unparam: frameGroup.markFunction(function (str) {
                     return S.unparam(str);
@@ -535,38 +535,38 @@ KISSY.add(function (S, Calendar) {
                 }),
 
                 DOM: {
-                    //get, ¼´query[0]
+                    //get, å³query[0]
                     get: frameGroup.markFunction(function (s, context) {
                         var ret = query(s, context);
                         return tame(ret[0], true);
                     }),
 
-                    // Ìá¹©Ñ¡ÔñÆ÷¹¦ÄÜ
+                    // æä¾›é€‰æ‹©å™¨åŠŸèƒ½
                     query: frameGroup.markFunction(function (s, context) {
                         var ret = query(s, context);
-                        // imports.document.compareDocumentPosition ²»´æÔÚ bug£¡
-                        // Ë÷ĞÔÓÃ html £¬·´ÕıµêÆÌÄ£¿é²»ÄÜĞ´ head
-                        // body ²»ĞĞ£¬body.contains Óë body.compareDocumentPosition ¶¼Ã»£¡
-                        // ²»ÄÜÓÃ imports , firefox/ie ²»ĞĞ
+                        // imports.document.compareDocumentPosition ä¸å­˜åœ¨ bugï¼
+                        // ç´¢æ€§ç”¨ html ï¼Œåæ­£åº—é“ºæ¨¡å—ä¸èƒ½å†™ head
+                        // body ä¸è¡Œï¼Œbody.contains ä¸ body.compareDocumentPosition éƒ½æ²¡ï¼
+                        // ä¸èƒ½ç”¨ imports , firefox/ie ä¸è¡Œ
                         S.each(ret, function (v, i) {
-                            // ÊÖ¶¯ tame£¬¿ò¼Ü±£Ö¤·µ»ØÊı¾İÎŞº¦£¡
+                            // æ‰‹åŠ¨ tameï¼Œæ¡†æ¶ä¿è¯è¿”å›æ•°æ®æ— å®³ï¼
                             ret[i] = tame(v, true);
                         });
                         return ret;
                     }),
 
-                    // ¼æÈİĞÔ´¦Àí£¬¶ÁÈ¡orÉèÖÃÔªËØ text
+                    // å…¼å®¹æ€§å¤„ç†ï¼Œè¯»å–orè®¾ç½®å…ƒç´  text
                     text: frameGroup.markFunction(function (s, value) {
                         return S.DOM.text(query(s), value);
                     }),
 
-                    // ¼æÈİĞÔ´¦Àí£¬¶ÁÈ¡orÉèÖÃÔªËØ×ø±ê
+                    // å…¼å®¹æ€§å¤„ç†ï¼Œè¯»å–orè®¾ç½®å…ƒç´ åæ ‡
                     offset: frameGroup.markFunction(function (s, value) {
                         return S.DOM.offset(query(s), value);
                     }),
 
-                    //Ä¿Ç°Õâ¸ö½Ó¿ÚÏÈÈ¥µô£¬ÒòÎªÃ»ÓĞ×öĞ£Ñé
-                    //2013Äê1ÔÂ25ÈÕ Ìá¹©¶Á½Ó¿Ú
+                    //ç›®å‰è¿™ä¸ªæ¥å£å…ˆå»æ‰ï¼Œå› ä¸ºæ²¡æœ‰åšæ ¡éªŒ
+                    //2013å¹´1æœˆ25æ—¥ æä¾›è¯»æ¥å£
                     css: frameGroup.markFunction(function (s, prop) {
 
                         return S.DOM.css(query(s), prop);
@@ -635,7 +635,7 @@ KISSY.add(function (S, Calendar) {
                     }
 
 
-                    //ÕâÀï´¦ÀíÏÂ£¬Ä¿Ç°Ö»Ö§³Öjson»òÕßjsonpµÄĞÎÊ½
+                    //è¿™é‡Œå¤„ç†ä¸‹ï¼Œç›®å‰åªæ”¯æŒjsonæˆ–è€…jsonpçš„å½¢å¼
                     if (!('json' === untamedcfg.dataType || 'jsonp' === untamedcfg.dataType)) {
                         untamedcfg.dataType = "jsonp";
                     }
@@ -644,7 +644,7 @@ KISSY.add(function (S, Calendar) {
                         return S.io(S.mix(untamedcfg));
                     } else {
                         return function () {
-                            S.log('url ²»ÔÚ°×Ãûµ¥ÖĞ.')
+                            S.log('url ä¸åœ¨ç™½åå•ä¸­.')
                         };
                     }
 
@@ -657,7 +657,7 @@ KISSY.add(function (S, Calendar) {
                     S.log.apply(S, arguments);
                 }),
 
-                // Ìá¹©ÅúÁ¿×¢²áÊÂ¼ş¹¦ÄÜ
+                // æä¾›æ‰¹é‡æ³¨å†Œäº‹ä»¶åŠŸèƒ½
                 Event: {
                     add: Event_On,
                     on: Event_On,
@@ -669,7 +669,7 @@ KISSY.add(function (S, Calendar) {
                     })
                 },
 
-                // Ìá¹©¶¯»­·½±ã¹¦ÄÜ
+                // æä¾›åŠ¨ç”»æ–¹ä¾¿åŠŸèƒ½
                 Anim: frameGroup.markFunction(function () {
                     var args = S.makeArray(arguments);
                     args[0] = query(args[0])[0];
