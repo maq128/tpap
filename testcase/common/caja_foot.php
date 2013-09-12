@@ -54,6 +54,7 @@ if ( isset($_GET['native']) ) {
 </body>
 </html>
 <?php
+// 把生成的 html 内容静态化到一个 html 文件里
 $html = ob_get_contents();
 file_put_contents( $baseName . '.html', $html );
 ob_end_flush();

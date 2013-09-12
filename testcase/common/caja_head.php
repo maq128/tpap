@@ -1,6 +1,8 @@
 ﻿<?php
-// 根据访问路径确定适配器名称，用于生成 html / js 文件。
+// 根据访问路径确定适配器名称，用于生成 html / js 文件
 $baseName = basename( strtolower($_SERVER['SCRIPT_NAME']), '.php' );
+
+// 启用缓存，为了收集所生成的 html 内容
 ob_start();
 ?><!doctype html>
 <html>
