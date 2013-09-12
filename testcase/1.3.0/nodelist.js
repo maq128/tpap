@@ -1,6 +1,4 @@
-console.log('1', NodeList);
-// console.log('2', KISSY.NodeList);
-// var NodeList = KISSY.NodeList;
+var NodeList = KISSY.NodeList;
 
 console.log('NodeList.all', NodeList.all);
 var parent = NodeList.all('.dom-father');
