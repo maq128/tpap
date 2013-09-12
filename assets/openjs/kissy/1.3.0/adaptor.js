@@ -186,7 +186,7 @@ KISSY.makeAdaptor = function( def ) {
 					CreateSafeStaticMethod( HybridAdaptor, method );
 				}
 
-				var expose = {};
+				var expose = { kissy: def.in_kissy };
 				expose[ def.ctor ] = HybridAdaptor.TAMED_TWIN___;
 				return expose;
 			}

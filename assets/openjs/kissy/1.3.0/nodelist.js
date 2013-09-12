@@ -2,6 +2,7 @@ KISSY.makeAdaptor({
 	requires: ['core'],
 	ctor: 'NodeList',
 	adaptee: KISSY.NodeList,
+	in_kissy: true,
 	args: ['selector'],
 	properties: {
 		lengthx: {
